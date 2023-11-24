@@ -1,0 +1,27 @@
+version: "1.1"
+
+services:
+  mysqldb:
+    container_name: mysqldb
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: employeemanagement
+
+    networks:
+      springboot-mysql-network:
+
+  springboot-mysql-restapi:
+    container_name: springboot-mysql-restapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      springboot-mysql-network:
+    restart: on-failure
+
+networks:
+  springboot-mysql-network:
+
